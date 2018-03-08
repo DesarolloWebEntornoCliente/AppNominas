@@ -15,10 +15,11 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/fonts/OLD/font-awesome.min.css" />">
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Conceptos</title>
+<title>Usuarios</title>
 </head>
 <body>
-<div style="background-color: ">
+
+	<div style="background-color: ">
 		<!-- Inicio -->
 		<nav class="navbar navbar-expand-md navbar-light bg-light">
 			<figure class="figure mt-0 mb-0">
@@ -36,40 +37,52 @@
 			<a href="cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
 		</nav>
 
-	<div class="container"  style="margin-top: 2% ">
+	<div class="container" style="margin-top: 2% ">
 	<div class="row">
 		<div class="col-6 col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Adiciona / Edita Conceptos</h3>
+					<h3 class="panel-title">Adiciona / Edita Usuarios</h3>
 				</div>
 				<div class="panel-body">
-					<c:url value="/adicionaEdita" var="add"></c:url>
-					<f:form action="${add }" commandName="concepto" class="form" role="form" >
+					<c:url value="/adicionaEditaUsuario/50" var="add"></c:url>
+					<f:form action="${add }" commandName="usuario" class="form" role="form" >
 						<div class="form-group">
-							<c:if test="${!empty concepto.descripcion }"></c:if>
-							<f:label path="idConcepto"><t:message code="" text="Codigo"></t:message> </f:label>
-							<f:input path="idConcepto" class="form-control" readonly="true" disabled="true" />
-							<f:hidden path="idConcepto"/>
+							<c:if test="${!empty usuario.nombre }">
+							<f:label path="idUsuario"><t:message code="" text="Codigo"></t:message> </f:label>
+							<f:input path="idUsuario" class="form-control" readonly="true" disabled="true" />
+							<f:hidden path="idUsuario"/>
+							</c:if>
 						</div>
 						<div class="form-group">
-							<f:label path="descripcion"><t:message code="" text="Descripción"></t:message></f:label>
-							<f:input path="descripcion" class="form-control"/>
+							<f:label path="nombre"><t:message code="" text="Nombre"></t:message></f:label>
+							<f:input path="nombre" class="form-control" required="required" />
 						</div>
 						<div class="form-group">
-							<f:label path="impuesto"><t:message code="" text="Impuesto"></t:message></f:label>
-							<f:input path="impuesto" class="form-control"/>
+							<f:label path="email"><t:message code="" text="Correo"></t:message></f:label>
+							<f:input path="email" type="email" class="form-control"  required="required" />
+						</div>					
+								
+						<div class="form-group">
+							<f:label path="login"><t:message code="" text="Login"></t:message></f:label>
+							<f:input path="login" type="text" class="form-control"  required="required" />
 						</div>	
+						<div class="form-group">
+							<f:label path="password"><t:message code="" text="Contraseña"></t:message></f:label>
+							<f:input path="password" type="password" class="form-control"  required="required" />
+						</div>	
+
 						<div class="form-group">
 							<f:label path="tipo"><t:message code="" text="Tipo"></t:message></f:label>
-							<f:input path="tipo" class="form-control"/>
+							<f:input path="tipo" class="form-control" required="required" />
 						</div>	
+
 						<c:choose>
-							<c:when test="${!empty concepto.descripcion }">
-								<input type="submit" value="<t:message code="" text="Editar Concepto" />" class="btn btn-info">
+							<c:when test="${!empty usuario.nombre }">
+								<input type="submit" value="<t:message code="" text="Editar Usuario" />" class="btn btn-info">
 							</c:when>
 							<c:otherwise>
-								<input type="submit" value="<t:message code="" text="Añadir Concepto" />" class="btn btn-primary">
+								<input type="submit" value="<t:message code="" text="Añadir Usuario" />" class="btn btn-primary">
 							</c:otherwise>
 						</c:choose>
 															
@@ -79,27 +92,29 @@
 		</div>
 	
 		<div class="row">
-			<div class="col-sm col-md">
-				<c:if test="${!empty listConceptos }">
+			<div class="col-12 col-md-8">
+				<c:if test="${!empty listUsuarios }">
 			
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Descripción</th>
-							<th>Impuesto</th>
+							<th>Nombre</th>
+							<th>Correo</th>
+							<th>Login</th>
 							<th>Tipo</th>
 							<th>Editar</th>
 							<th>Borrar</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${listConceptos}" var="cp">
+						<c:forEach items="${listUsuarios}" var="u">
 							<tr>
-								<td>${cp.descripcion }</td>
-								<td>${cp.impuesto }</td>
-								<td>${cp.tipo }</td>
-								<td><a class="btn btn-info btn-xs" href='<c:url value="/edit/${cp.idConcepto }"></c:url>'>Edit</a></td>
-								<td><a class="btn btn-danger btn-xs" href='<c:url value="/delete/${cp.idConcepto }"></c:url>'>Del</a></td>
+								<td>${u.nombre }</td>
+								<td>${u.email }</td>
+								<td>${u.login }</td>
+								<td>${u.tipo }</td>
+								<td><a class="btn btn-info btn-xs" href='<c:url value="/editUsuario/${u.idUsuario }"></c:url>'>Edit</a></td>
+								<td><a class="btn btn-danger btn-xs" href='<c:url value="/deleteUsuario/${u.idUsuario }"></c:url>'>Del</a></td>
 								<td></td>
 							</tr>
 						</c:forEach>
@@ -110,7 +125,7 @@
 		</div>
 	</div>
 </div>
-	</div>
+</div>
 
 	<!-- Optional JavaScript -->
 	<script src="<c:url value="/resources/js/jquery-3.2.1.slim.min.js" />"></script>

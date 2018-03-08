@@ -79,11 +79,13 @@
         <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <div class="panel-title">Registrar</div>
-                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Login</a></div>
+                            <div class="panel-title"><h4>Registrar</h4></div>
+                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()"><h5>Login</h5></a></div>
                         </div>  
                         <div class="panel-body" >
-                            <form id="signupform" class="form-horizontal" role="form">
+                        <c:url value="/registraUsuario" var="add"></c:url>
+						<f:form action="${add }" commandName="usuario"  id="signupform" class="form-horizontal" role="form" >
+                        
                                 
                                 <div id="signupalert" style="display:none" class="alert alert-danger">
                                     <p>Error:</p>
@@ -93,33 +95,37 @@
                                 <div class="form-group">
                                     <label for="email" class="col-md-3 control-label">Email</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="email" placeholder="Cuenta de Correo">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Cuenta de Correo" required="required">
                                     </div>
                                 </div>
                                     
                                 <div class="form-group">
                                     <label for="firstname" class="col-md-3 control-label">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="firstname" placeholder="Nombre y Apellidos">
+                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="lastname" class="col-md-3 control-label">Usuario</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="lastname" placeholder="Nombre de Usuario">
+                                        <input type="text" class="form-control" id="login" name="login" placeholder="Nombre de Usuario" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="col-md-3 control-label">Contraseña</label>
                                     <div class="col-md-9">
-                                        <input type="password" class="form-control" name="passwd" placeholder="Contraseña">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required="required">
                                     </div>
                                 </div>
 
+                              <div class="form-group">
+                                  <input type="hidden" class="form-control" id="tipo" name="tipo" value="0">
+                                </div>
+  
                                 <div class="form-group">
                                     <!-- Button -->                                        
                                     <div class="col-md-offset-3 col-md-9">
-                                        <button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Registrar</button>
+                                        <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> Registrar</button>
                                     </div>
                                 </div>
                                 
@@ -127,7 +133,7 @@
                                                                             
                                 </div>
                                                                 
-                            </form>
+                            </f:form>
                          </div>
                     </div>
          </div> 

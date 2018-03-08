@@ -13,6 +13,9 @@ import es.altair.nomina.bean.Usuario;
 public class UsuarioDAOImpl implements UsuarioDAO {
 	
 String pass = "altair123$%";
+
+String key = "47AE31A79FEEB2A3"; // LLAVE DE INCRIPTACIÓN
+String iv = "0123456789ABCDEF"; // VETOR DE INICIALIZACIÓN
 	
 private SessionFactory sessionFactory;
 	
@@ -27,10 +30,15 @@ private SessionFactory sessionFactory;
 		
 		Session sesion = sessionFactory.getCurrentSession();
 		
-			usu = (Usuario) sesion.createQuery("SELECT u FROM Usuario u WHERE login=:c AND password=:p")
-					.setParameter("c", login)
-					.setParameter("p", password)
-					.uniqueResult();
+			try {
+				usu = (Usuario) sesion.createQuery("SELECT u FROM Usuario u WHERE login=:c AND password=:p")
+						.setParameter("c", login)
+						.setParameter("p", Util.Encriptaciones.encrypt(key, iv, password))
+						.uniqueResult();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		return usu;
 	}
@@ -39,6 +47,14 @@ private SessionFactory sessionFactory;
 	@Override
 	public void insertar(Usuario usu) {
 		Session sesion = sessionFactory.getCurrentSession();
+		
+		try {
+			usu.setPassword(Util.Encriptaciones.encrypt(key, iv, usu.getPassword()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		sesion.persist(usu);
 		
 

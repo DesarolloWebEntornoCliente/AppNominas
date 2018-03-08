@@ -18,21 +18,6 @@
 <body>
 	<div class="">
 	
-		<%-- <%
-			if (session.getAttribute("usuLogeado") == null || session.isNew()) {
-				response.sendRedirect("../index.jsp?mensaje=Inicie sesión");
-			} else {
-
-				Usuario ulog = (Usuario)session.getAttribute("usuLogeado");
-				
-				UsuarioDAO uDAO = new UsuarioDAOImplHibernate();
-				List<Usuario> usuarios = uDAO.listarUsuarios();
-
-				boolean esNulo2 = true;
-				if (usuarios == null)
-					esNulo2 = false;
-		%> --%>
-		<!-- Inicio -->
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 			<figure class="figure mt-0 mb-0">
 				<a class="navbar-brand" href=""><img
@@ -48,34 +33,13 @@
 					class="btn btn-outline-success btn-sm derecha">Principal</a>
 			</div>
 
-			<a href="../cerrarSesion" role="button" class="btn btn-link btn-sm derecha">Cerrar Sesión</a>
+			<a href="cerrarSesion" role="button" class="btn btn-link btn-sm derecha">Cerrar Sesión</a>
 		</nav>
 
-		<!-- Fin Inicio -->
-		<div>
-			<br /> <br /> <br />
-			<%-- <%
-				String error = request.getParameter("mensaje");
-					if (error != null) {
-			%> --%>
-
-			<!-- 	<div class="alert alert-warning alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-hidden="true">x</button>
-				<strong>Info!</strong> -->
-			<%-- <%=error%> --%>
-		</div>
-		<%-- <%
-				}
-			%> --%>
-	</div>
-
-	<!-- inicio carousel -->
-
+	
 	<div class="mt-5" data-toggle="collapse">
 	
 	<br>
-	<!-- Tabla De Juegos -->
 	<div class="container">
 	<div class="row">
 	<div class="input-group mb-3">

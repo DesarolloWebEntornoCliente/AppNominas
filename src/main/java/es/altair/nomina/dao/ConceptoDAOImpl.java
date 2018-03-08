@@ -3,13 +3,14 @@ package es.altair.nomina.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.altair.nomina.bean.Concepto;
+import es.altair.nomina.bean.Nomina;
 
 @Repository
 public class ConceptoDAOImpl implements ConceptoDAO {
@@ -26,7 +27,19 @@ private SessionFactory sessionFactory;
 		
 		Session sesion = sessionFactory.getCurrentSession();
 		
-		return (List<Concepto>)sesion.createQuery("from Concepto").list();
+		//return (List<Concepto>)sesion.createQuery("from Concepto").list();
+
+		
+		List<Concepto> conceptos = new ArrayList<Concepto>();
+
+		conceptos = (List<Concepto>) ((SQLQuery) sesion.createSQLQuery("select * from conceptos")).addEntity(Concepto.class).list();
+
+		System.out.println("Lista de Conceptos: " + conceptos);
+		
+		return conceptos;
+		
+		
+		
 	}
 
 	@Transactional
@@ -61,6 +74,7 @@ private SessionFactory sessionFactory;
 
 		return (Concepto)sesion.get(Concepto.class, id); 
 	}
+	
 	
 
 }

@@ -77,6 +77,12 @@ public class Concepto implements Serializable  {
 	public void setNominas(Set<Nomina> nominas) {
 		this.nominas = nominas;
 	}
+
+	@Override
+	public String toString() {
+		return "Concepto [idConcepto=" + idConcepto + ", descripcion=" + descripcion + ", impuesto=" + impuesto
+				+ ", tipo=" + tipo + ", nominas=" + nominas + "]";
+	}
 	
 	
 }

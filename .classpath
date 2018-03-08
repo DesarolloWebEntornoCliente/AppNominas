@@ -33,5 +33,8 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Ray/Downloads/commons-codec-1.11-bin/commons-codec-1.11/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ray/Downloads/commons-codec-1.11-bin/commons-codec-1.11/commons-codec-1.11-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ray/Downloads/org-apache-commons-codec.jar/org-apache-commons-codec.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

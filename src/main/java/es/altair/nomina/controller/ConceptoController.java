@@ -27,7 +27,7 @@ public class ConceptoController {
 	}
 	
 	@RequestMapping(value="/delete/{id}") 
-	public String delete(@PathVariable("id")int idConcepto) {
+	public String deleteConcepto(@PathVariable("id")int idConcepto) {
 		
 		conceptoDAO.delete(idConcepto);
 		
