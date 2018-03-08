@@ -99,6 +99,13 @@ public class Usuario implements Serializable{
 	public void setNominas(Set<Nomina> nominas) {
 		this.nominas = nominas;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", nombre=" + nombre + ", login=" + login + ", email=" + email
+				+ ", password=" + password + ", tipo=" + tipo + ", nominas=" + nominas + ", nominasRef=" + nominasRef
+				+ "]";
+	}
 	
 	
 }

@@ -29,9 +29,9 @@
 
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href="usuarios" role="button" class="btn btn-outline-success btn-sm derecha">Usuarios</a>
-				<a href="conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
-				<a href="nominasReferencia" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>
+				<a href="usuarios" role="button" class="btn btn-outline-success btn-sm derecha disabled">Usuarios</a>
+				<a href="../conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
+				<a href="../nominasReferencia/${usuario.idUsuario }" role="button" class="btn btn-outline-success btn-sm derecha disabled" style="margin-left: 1%">Nominas</a>
 			</div>
 
 			<a href="cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
@@ -73,9 +73,13 @@
 						</div>	
 
 						<div class="form-group">
-							<f:label path="tipo"><t:message code="" text="Tipo"></t:message></f:label>
-							<f:input path="tipo" class="form-control" required="required" />
-						</div>	
+							<f:label path="tipo"><t:message code="" text="Seleccione un Tipo"></t:message></f:label>
+								<select class="form-control" name="tipo" id="tipo">
+							      	<option value="0">Desabilitado</option>							      	
+							      	<option value="1">Usuario</option>							      								      													
+							      	<option value="2">Administrador</option>							      								      													
+								</select>														
+						</div>
 
 						<c:choose>
 							<c:when test="${!empty usuario.nombre }">
@@ -85,11 +89,15 @@
 								<input type="submit" value="<t:message code="" text="Añadir Usuario" />" class="btn btn-primary">
 							</c:otherwise>
 						</c:choose>
+						<td><a class="btn btn-primary btn-xs" href='<c:url value="/principalAdmin"></c:url>'>Volver</a></td>
 															
 					</f:form>
 				</div>
 			</div>
 		</div>
+		
+			<c:set var="idN" value="${0}"/> 
+			<c:set var="nom" value=""/> 
 	
 		<div class="row">
 			<div class="col-12 col-md-8">
@@ -113,8 +121,12 @@
 								<td>${u.email }</td>
 								<td>${u.login }</td>
 								<td>${u.tipo }</td>
+								
+								<c:set var="idN" value="${u.idUsuario}"/> 
+								<c:set var="nom" value="${u.nombre}"/> 
+
 								<td><a class="btn btn-info btn-xs" href='<c:url value="/editUsuario/${u.idUsuario }"></c:url>'>Edit</a></td>
-								<td><a class="btn btn-danger btn-xs" href='<c:url value="/deleteUsuario/${u.idUsuario }"></c:url>'>Del</a></td>
+								<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
 								<td></td>
 							</tr>
 						</c:forEach>
@@ -126,7 +138,27 @@
 	</div>
 </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Desea Borrar a ${nom }</p><p> ${idN }</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		<a class="btn btn-danger btn-xs" href='<c:url value="deleteUsuario/${idN }"></c:url>'>Confirmar</a>       
+        <button type="button" class="btn btn-primary" onclick="'<c:url value="/deleteUsuario/${idn }"></c:url>'" + ${idn }">Confirmar</button> 
+      </div>
+    </div>
+  </div>
+</div>
 	<!-- Optional JavaScript -->
 	<script src="<c:url value="/resources/js/jquery-3.2.1.slim.min.js" />"></script>
 	<script src="<c:url value="/resources/js/popper.min.js" />"></script>

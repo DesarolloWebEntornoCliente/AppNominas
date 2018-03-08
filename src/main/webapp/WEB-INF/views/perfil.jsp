@@ -19,7 +19,8 @@
 </head>
 <body>
 
-	<div style="background-color: ">
+	<div class="">
+	
 		<!-- Inicio -->
 		<nav class="navbar navbar-expand-md navbar-light bg-light">
 			<figure class="figure mt-0 mb-0">
@@ -27,16 +28,17 @@
 					src="<c:url value="/resources/images/nominaLogo.png" />"	class="figure-img img-fluid rounded" alt="" style="width: 20%;"></a>
 			</figure>
 
+
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href="usuarios" role="button" class="btn btn-outline-success btn-sm derecha">Usuarios</a>
-				<a href="conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
-				<a href="nominasReferencia" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>
+				<a href='<c:url value="/perfil/${usu.idUsuario }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha disabled">Mi Perfil</a>
+			 	<a href='<c:url value="../nominasReferenciaUsu/${usuario.idUsuario }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha " style="margin-left: 1%">Nominas</a> 
 			</div>
 
-			<a href="cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
+			<a href="../cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
 		</nav>
 
+	</div>
 	<div class="container" style="margin-top: 2% ">
 	<div class="row">
 		<div class="col-6 col-md-4">
@@ -47,10 +49,6 @@
 				<div class="panel-body">
 					<c:url value="/adicionaEditaUsuario/100" var="add"></c:url>
 					<f:form action="${add }" commandName="usuario" class="form" role="form" method="post"> 
-						<div class="form-group">
-							<f:label path="idUsuario"><t:message code="" text="Codigo"></t:message> </f:label>
-							<f:input path="idUsuario" class="form-control" readonly="true" disabled="true" />
-						</div>
 						<div class="form-group">
 							<f:label path="nombre"><t:message code="" text="Nombre"></t:message></f:label>
 							<f:input path="nombre" class="form-control"  required="required" />
@@ -74,7 +72,7 @@
 							<f:input path="tipo" class="form-control" readonly="true"/> 
 						</div>	
 
-						<input type="submit" value="<t:message code="" text="Editar Perfil" />" class="btn btn-info">
+						<input type="submit" value="<t:message code="" text="Guardar Datos" />" class="btn btn-info">
 															
 					</f:form>
 				</div>

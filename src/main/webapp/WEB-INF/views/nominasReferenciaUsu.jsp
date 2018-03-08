@@ -19,7 +19,8 @@
 </head>
 <body>
 
-<div style="background-color: ">
+	<div class="">
+	
 		<!-- Inicio -->
 		<nav class="navbar navbar-expand-md navbar-light bg-light">
 			<figure class="figure mt-0 mb-0">
@@ -27,15 +28,17 @@
 					src="<c:url value="/resources/images/nominaLogo.png" />"	class="figure-img img-fluid rounded" alt="" style="width: 20%;"></a>
 			</figure>
 
+
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href="usuarios" role="button" class="btn btn-outline-success btn-sm derecha">Usuarios</a>
-				<a href="conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
-				<a href="nominasReferencia" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>
+				<a href='<c:url value="/perfil/7"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha">Mi Perfil</a>
+			 	<a href='<c:url value="/nominasReferenciaUsu/${usuario }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha disabled" style="margin-left: 1%">Nominas</a> 
 			</div>
 
-			<a href="cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
+			<a href="../cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
 		</nav>
+
+	</div>
 
 
 	<div class="container"  style="margin-top: 2% ">
@@ -43,7 +46,7 @@
 		<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-				<a class="btn btn-info btn-xs"  style="margin-bottom: 1%" href='<c:url value="/nominas/0/0"></c:url>'>Crear Nueva Nomina</a>
+					<h3 class="panel-title">Consultar Nomina</h3>
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaNomina" var="add"></c:url>
@@ -54,22 +57,17 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Codigo</th>
 							<th>Mes</th>
 							<th>valor</th>
-							<th>Usuario</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${listNominasRef}" var="nr">
 							<tr>
-								<td>${nr.idNominaRef }</td>
 								<td>${nr.mes }</td>
 								<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${nr.valor}"  pattern="##,###.00" /></td>	
-								<td>${nr.getUsuarios().getNombre() }</td> 
-								<td><a class="btn btn-info btn-xs" href='<c:url value="/nominas/${nr.getUsuarios().getIdUsuario() }/${nr.mes }"></c:url>'>Seleccionar</a></td>
-								<td><a class="btn btn-info btn-xs" href='<c:url value="/verNomina/${nr.getUsuarios().getIdUsuario() }/${nr.mes }"></c:url>'>Ver Nomina</a></td>
+								<td><a class="btn btn-info btn-xs" href='<c:url value="/verMiNomina/${nr.getUsuarios().getIdUsuario() }/${nr.mes }"></c:url>'>Ver Nomina</a></td>
 								<td></td>
 							</tr>
 						</c:forEach>

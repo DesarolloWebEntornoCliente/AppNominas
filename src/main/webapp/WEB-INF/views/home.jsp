@@ -119,7 +119,7 @@
                                 </div>
 
                               <div class="form-group">
-                                  <input type="hidden" class="form-control" id="tipo" name="tipo" value="0">
+                                  <input type="hidden" class="form-control" id="tipo" name="tipo" value="1">
                                 </div>
   
                                 <div class="form-group">

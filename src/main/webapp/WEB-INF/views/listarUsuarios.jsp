@@ -24,15 +24,14 @@
 				<a class="navbar-brand" href=""><img
 					src="<c:url value="/resources/images/nominaLogo.png" />"	class="figure-img img-fluid rounded" alt="" style="width: 20%;"></a>
 			</figure>
-
-
+			
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href='<c:url value="/perfil/7"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha">Mi Perfil</a>
-			<!-- 	<a href='<c:url value="/miNomina/7"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>  -->
+				<a href='<c:url value="/perfil/${usu1.getIdUsuario() }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha">Mi Perfil</a>
+			 	<a href='<c:url value="/nominasReferenciaUsu/${usu1.getIdUsuario() }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a> 
 			</div>
 
-			<a href="cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
+			<a href="../cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
 		</nav>
 
 	</div>

@@ -27,23 +27,27 @@
 					src="<c:url value="/resources/images/nominaLogo.png" />"	class="figure-img img-fluid rounded" alt="" style="width: 20%;"></a>
 			</figure>
 
+
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href="../../usuarios" role="button" class="btn btn-outline-success btn-sm derecha">Usuarios</a>
-				<a href="../../conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
-				<a href="../../nominasReferencia" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>
+				<a href='<c:url value="/perfil/7"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha">Mi Perfil</a>
+			 	<a href='<c:url value="/nominasReferenciaUsu/${usu.idUsuario }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha disabled" style="margin-left: 1%">Nominas</a> 
 			</div>
 
 			<a href="../../cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
 		</nav>
 
+	</div>
+
 	<div class="container" style="margin-top: 1% ">
 		<div class="row" >
-					<div class="col-sm">
+		   <div class="col-sm">
 		
-		<div class="alert alert-secondary" role="alert" style="margin-top: 2%">
-			<p>Usuario :  <c:out value = "${usu.nombre}"/><p>
-		</div>
+			<div class="alert alert-secondary" role="alert" style="margin-top: 2%">
+				<p>Usuario :  <c:out value = "${usu.nombre}"/>
+				<a style="margin-left: 30%;" class="btn btn-primary btn-xs" href='<c:url value="/nominasReferenciaUsu/${usu.idUsuario }"></c:url>'>Volver</a>	<p>		
+			</div>
+
 				
 		</div>
 		</div>

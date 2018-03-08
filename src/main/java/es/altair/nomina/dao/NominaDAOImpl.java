@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import es.altair.nomina.bean.Nomina;
 import es.altair.nomina.bean.NominaRef;
 import es.altair.nomina.bean.Concepto;
+import es.altair.nomina.bean.Meses;
 import es.altair.nomina.bean.Usuario;
 
 @Repository
@@ -45,15 +46,14 @@ public class NominaDAOImpl implements NominaDAO {
 
 	@Transactional
 	@Override
-	public List<NominaRef> listarNominasPorUsuario(int idUsuario, int mes) {
+	public List<NominaRef> listarNominasPorUsuario(int idUsuario) {
 
 		List<NominaRef> nominas = new ArrayList<NominaRef>();
 		
 		Session sesion = sessionFactory.getCurrentSession();
 		
-		nominas = (List<NominaRef>) sesion.createQuery("SELECT u FROM NominaRef u WHERE idUsuario=:id AND mes=:m")
+		nominas = (List<NominaRef>) sesion.createQuery("SELECT u FROM NominaRef u WHERE idUsuario=:id order by mes")
 				.setParameter("id", idUsuario)
-				.setParameter("m", mes)
 				.list();
 		
 		return nominas;
@@ -93,10 +93,20 @@ public class NominaDAOImpl implements NominaDAO {
 		
 		Session sesion = sessionFactory.getCurrentSession();
 
-		sesion.persist(n);
+		if(n.getConceptos().getIdConcepto() == 1) {
+			
+			NominaRef nRef = new NominaRef(n.getValor(), n.getMes(), n.getUsuarios());
+			
+			sesion.createSQLQuery("insert into nominasref (valor, mes, idUsuario) values (:v, :m, :u)")
+			.setParameter("v", n.getValor())
+			.setParameter("m", n.getMes())
+			.setParameter("u", n.getUsuarios().getIdUsuario()).executeUpdate();
+		}
 		
+		sesion.persist(n);
 	}
 
+	@Transactional
 	@Override
 	public Nomina obtenerNominaPorId(int id) {
 		
@@ -105,6 +115,7 @@ public class NominaDAOImpl implements NominaDAO {
 		return (Nomina)sesion.get(Nomina.class, id); 
 	}
 
+	@Transactional
 	@Override
 	public void delete(int id) {
 		
@@ -120,6 +131,34 @@ public class NominaDAOImpl implements NominaDAO {
 		
 		//sesion.delete(obtenerNominaPorId(id));
 		
+	}
+
+	@Transactional
+	@Override
+	public void insertarNominaRef(NominaRef n) {
+		
+		Session sesion = sessionFactory.getCurrentSession();
+
+		sesion.persist(n);
+		
+	}
+
+	@Transactional
+	@Override
+	public Meses obtenerMes(int idMes) {
+		
+		Session sesion = sessionFactory.getCurrentSession();
+
+		return (Meses)sesion.get(Meses.class, idMes); 
+	}
+
+	@Transactional
+	@Override
+	public List<Meses> listaMeses() {
+		
+		 Session sesion = sessionFactory.getCurrentSession();
+			
+		return (List<Meses>) sesion.createSQLQuery("select * from meses ").addEntity(Meses.class).list();
 	}
 	
 

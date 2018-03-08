@@ -40,6 +40,7 @@
 				<beans:value>es.altair.nomina.bean.Concepto</beans:value>
 				<beans:value>es.altair.nomina.bean.Nomina</beans:value>
 				<beans:value>es.altair.nomina.bean.NominaRef</beans:value>
+				<beans:value>es.altair.nomina.bean.Meses</beans:value>
 			</beans:list>
 			</beans:property>
 			

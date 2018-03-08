@@ -39,12 +39,13 @@ public class UsuarioController {
 	@RequestMapping(value = "/comprobarUsuario", method = RequestMethod.POST)
 	public String login(@ModelAttribute Usuario usu, HttpSession sesion, Model model) {
 		usu = usuarioDAO.comprobarUsuario(usu.getLogin(), usu.getPassword());
+		
 		if (usu != null) {
 			sesion.setAttribute("usuLogeado", usu);
 			switch (usu.getTipo()) {
 			case 1:
-				model.addAttribute("idUsuario", usu.getIdUsuario());
-				return "redirect:/listarUsuarios";
+				model.addAttribute("usuario", usuarioDAO.obtenerUsuarioPorId(usu.getIdUsuario()));				
+				return "redirect:/listarUsuarios/" + usu.getIdUsuario();
 			case 2:
 				return "redirect:/principalAdmin?mensaje=Sesion Iniciada Con exito";
 			}
@@ -66,23 +67,23 @@ public class UsuarioController {
 		return new ModelAndView("home", "command", new Usuario());
 	}
 	
-	@RequestMapping(value="/listarUsuarios", method = RequestMethod.GET)
-	public String listarUsuarios(Model model,HttpSession session) {
+	@RequestMapping(value="/listarUsuarios/{id}", method = RequestMethod.GET)
+	public String listarUsuarios(@PathVariable("id")int idUsuario, @ModelAttribute Usuario usuario, Model model, HttpSession session) {
 		
 		if(noLogueado(session)) {
 			model.addAttribute("errorLogin","Inicie sesión para entrar");
 			return "redirect:/";
 		}
-	   	 model.addAttribute("listarU", usuarioDAO.listarUsuarios());
+				
 		 model.addAttribute("usu", new Usuario());
-		
+   		 model.addAttribute("usu1", usuarioDAO.obtenerUsuarioPorId(idUsuario));
+   		 
 		return "listarUsuarios";
 	}
 
 	@RequestMapping(value="/cerrarSesion", method = RequestMethod.GET)
-	public String cerrarSesion() {
-		
-		
+	public String cerrarSesion(HttpSession session) {
+				
 		return "redirect:/";
 	}
 	
@@ -121,9 +122,8 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/perfil/{id}", method = RequestMethod.GET)
-	public String perfil(Model model) {
-		model.addAttribute("usuario", new Usuario());
-		model.addAttribute("listUsuarios", usuarioDAO.listarUsuarios());
+	public String perfil(Model model, Usuario usuario, @PathVariable("id")int idUsuario) {
+		model.addAttribute("usuario", usuarioDAO.obtenerUsuarioPorId(idUsuario));
 		
 		return "perfil";
 	}
@@ -146,16 +146,6 @@ public class UsuarioController {
 		return "usuarios";
 	}
 	
-	@RequestMapping(value="/modificarPerfil/{id}") 
-	public String EditaPerfil(@PathVariable("id")int idUsuario, Model model) {
-		Usuario u = usuarioDAO.obtenerUsuarioPorId(idUsuario);
-		
-		model.addAttribute("usuario", u);
-		
-		return "perfil";
-	}
-	
-	
 	@RequestMapping(value="/adicionaEditaUsuario/{control}", method= RequestMethod.POST)
 	public String adicionarEditar1(@PathVariable("control")int control, @ModelAttribute Usuario u) {
 		
@@ -167,7 +157,7 @@ public class UsuarioController {
 		if(control == 50)
 			return "redirect:/usuarios";
 		else
-			return "redirect:/listarUsuarios";
+			return "redirect:/listarUsuarios/" + u.getIdUsuario();
 		
 	}
 	

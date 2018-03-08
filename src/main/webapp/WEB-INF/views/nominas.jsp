@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="t"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -27,9 +29,9 @@
 
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href="usuarios" role="button" class="btn btn-outline-success btn-sm derecha">Usuarios</a>
-				<a href="conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
-				<a href="nominasReferencia" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>
+				<a href="../../usuarios" role="button" class="btn btn-outline-success btn-sm derecha">Usuarios</a>
+				<a href="../../conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
+				<a href="../../nominasReferencia" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Nominas</a>
 			</div>
 
 			<a href="../../cerrarSesion" role="button" class="btn btn-info btn-sm derecha">Cerrar Sesión</a>
@@ -44,7 +46,7 @@
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaNomina" var="add"></c:url>
-					<f:form action="${add }" commandName="nomina" class="form" role="form"  method="post" >
+					<f:form action="${add }" commandName="nomina" class="form" role="form"  method="get" >
 						<div class="form-group">
 							<c:if test="${nomina.valor} > 0">
 								<f:label path="idNomina"><t:message code="" text="Codigo"></t:message> </f:label>
@@ -53,22 +55,36 @@
 							</c:if>
 						</div>
 						<div class="form-group">
+						
+						<c:choose>
+							<c:when test="${mesActual.getIdMes() > 0}">
 							<f:label path="mes"><t:message code="" text="Mes"></t:message></f:label>
+							
+								<select class="form-control" name="mes">				
+
+									<option value="${mesActual.getIdMes()}">${mesActual.getDescMes()}</option>
+											      													
+								</select>				
+						
+							</c:when>
+							<c:otherwise>
+								<f:label path="mes"><t:message code="" text="Mes"></t:message></f:label>
 								<select class="form-control" name="mes">
-							      	<option value="0">Seleccione un Mes</option>							      	
-							      	<option value="1">Enero</option>							      	
-							      	<option value="2">Febrero</option>							      	
-							      	<option value="3">Marzo</option>							      	
-							      	<option value="4">Abril</option>							      	
-							      	<option value="5">Mayo</option>							      	
-							      	<option value="6">Junio</option>							      	
-							      	<option value="7">Julio</option>							      	
-							      	<option value="8">Agosto</option>							      	
-							      	<option value="9">Septembre</option>							      	
-							      	<option value="10">Octubre</option>							      	
-							      	<option value="11">Noviembre</option>							      	
-							      	<option value="12">Diciembre</option>							      													
-								</select>														
+							   	<option value="0">Seleccione un Mes</option>							      	
+							
+										<c:forEach items="${listaMes}" var="lm">
+
+											<option value="${lm.getIdMes()}">${lm.getDescMes()}</option>
+
+										</c:forEach>							      													
+								</select>				
+								
+							</c:otherwise>
+						</c:choose>
+						
+						
+						
+																	
 						</div>
 						<div class="form-group">
 							<f:label path="valor"><t:message code="" text="Valor"></t:message></f:label>
@@ -77,7 +93,7 @@
 	
 						<!-- los selects -->
 						<div class="form-group">
-							<f:label path="valor"><t:message code="" text="Concepto"></t:message></f:label>
+							<f:label path=""><t:message code="" text="Concepto"></t:message></f:label>
 									<select class="form-control" name="concepto">
 								      	<option value="0">Seleccione un Concepto</option>							      	
 										<c:forEach items="${listaCon}" var="lc">
@@ -90,7 +106,19 @@
 						</div>	
 						
 						<div class="form-group">
-							<f:label path="valor"><t:message code="" text="Usuario"></t:message></f:label>
+		
+								<c:choose>
+							<c:when test="${!empty usuario}">
+							<f:label path=""><t:message code="" text="Usuario"></t:message></f:label>
+							
+								<select class="form-control" name="usuario">				
+
+									<option value="${usuario.getIdUsuario()}">${usuario.getNombre()}</option>
+											      													
+								</select>						
+							</c:when>
+							<c:otherwise>
+							<f:label path=""><t:message code="" text="Usuario"></t:message></f:label>
 									<select class="form-control" name="usuario">
 								      	<option value="0">Seleccione un Usuario</option>
 										<c:forEach items="${listaUsu}" var="lu">
@@ -99,18 +127,22 @@
 
 										</c:forEach>					
 
-									</select>
+									</select>			
+								
+							</c:otherwise>
+						</c:choose>
+
 						</div>								
 
 						<c:choose>
-							<c:when test="${!empty nomina.valor }">
+							<c:when test="${nomina.valor > 0}">
 								<input type="submit" value="<t:message code="" text="Editar Nomina" />" class="btn btn-info">
 							</c:when>
 							<c:otherwise>
-								<input type="submit" value="<t:message code="" text="Añadir Nomina" />" class="btn btn-primary">
+								<input type="submit" value="<t:message code="" text="Añadir Nomina" />" class="btn btn-success">
 							</c:otherwise>
 						</c:choose>
-								<td><a class="btn btn-success btn-xs" href='<c:url value="/generaHolerite/${nomina.mes }"></c:url>'>Generar Holerite</a></td>
+								<td><a class="btn btn-primary btn-xs" href='<c:url value="/nominasReferencia"></c:url>'>Volver</a></td>
 															
 					</f:form>
 				</div>
@@ -138,7 +170,7 @@
 							<tr>
 								<td>${nr.idNomina }</td>
 								<td>${nr.mes }</td>
-								<td>${nr.valor }</td>
+								<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${nr.valor}"  pattern="##,###.00" /></td>	
 								<td>${nr.getConceptos().getDescripcion() }</td>
 								<td>${nr.getUsuarios().getNombre() }</td> 
 								<td><a class="btn btn-info btn-xs" href='<c:url value="/editNomina/${nr.idNomina }"></c:url>'>Edit</a></td>

@@ -40,6 +40,15 @@ public class NominaController {
 		return "nominasReferencia";
 	}
 	
+	@RequestMapping(value="/nominasReferenciaUsu/{idUsu}", method = RequestMethod.GET)
+	public String nominasRefUsu(@PathVariable("idUsu")int idUsuario, Model model) {
+		model.addAttribute("nomina", new NominaRef());
+		model.addAttribute("listNominasRef", nominaDAO.listarNominasPorUsuario(idUsuario));
+		
+		return "nominasReferenciaUsu";
+	}
+	
+	
 	private boolean noLogueado(HttpSession session) {
 		Usuario usuarioLogueado = (Usuario) session.getAttribute("usuLogeado");
 		if (usuarioLogueado == null || session.isNew()) {
@@ -60,6 +69,9 @@ public class NominaController {
 		model.addAttribute("listNominas", nominaDAO.obtenerNominas(idNom, mes));
 		model.addAttribute("listaCon", conceptoDAO.listConceptos());
 		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());
+		model.addAttribute("usuario", usuarioDAO.obtenerUsuarioPorId(idNom));
+		model.addAttribute("mesActual", nominaDAO.obtenerMes(mes));
+		model.addAttribute("listaMes", nominaDAO.listaMeses());		
 		
 		return "nominas";
 	}
@@ -80,6 +92,25 @@ public class NominaController {
 		
 		return "verNomina";
 	}
+	
+	
+	@RequestMapping(value="/verMiNomina/{idU}/{m}", method = RequestMethod.GET)
+	public String verMiNominas(@PathVariable("idU")int idUsu, @PathVariable("m")int mes, Model model,HttpSession session) {
+		
+		if(noLogueado(session)) {
+			model.addAttribute("errorLogin","Inicie sesión para entrar");
+			return "redirect:/";
+		}
+		
+		model.addAttribute("nomina", new Nomina());
+		model.addAttribute("listNominas", nominaDAO.obtenerNominas(idUsu, mes));
+		model.addAttribute("listaCon", conceptoDAO.listConceptos());
+		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());
+		model.addAttribute("usu", usuarioDAO.obtenerUsuarioPorId(idUsu));
+		
+		return "verMiNomina";
+	}
+	
 	
 	@RequestMapping(value="/deleteNomina/{id}", method = RequestMethod.GET) 
 	public String delete2(@PathVariable("id")int idNomina, Model model) {
@@ -102,7 +133,7 @@ public class NominaController {
 	}
 	
 	
-	@RequestMapping(value="/adicionaEditaNomina", method= RequestMethod.POST)
+	@RequestMapping(value="/adicionaEditaNomina", method= RequestMethod.GET)
 	public String adicionarEditar2(@ModelAttribute Nomina n, Model model,HttpServletRequest request) {
 		
 		if(n.getIdNomina() == 0) {
@@ -119,8 +150,6 @@ public class NominaController {
 			n = new Nomina(val, m, c, u);			
 			
 			nominaDAO.insertar(n);
-			
-			
 		}
 		else {
 			nominaDAO.editNomina(n);

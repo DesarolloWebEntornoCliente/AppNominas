@@ -60,10 +60,16 @@
 							<f:label path="impuesto"><t:message code="" text="Impuesto"></t:message></f:label>
 							<f:input path="impuesto" class="form-control"/>
 						</div>	
+						
 						<div class="form-group">
 							<f:label path="tipo"><t:message code="" text="Tipo"></t:message></f:label>
-							<f:input path="tipo" class="form-control"/>
-						</div>	
+								<select class="form-control" name="tipo" id="tipo">
+							      	<option value="0">Seleccione un Tipo</option>							      	
+							      	<option value="D">Debito</option>							      								      													
+							      	<option value="C">Credito</option>							      								      													
+								</select>														
+						</div>						
+	
 						<c:choose>
 							<c:when test="${!empty concepto.descripcion }">
 								<input type="submit" value="<t:message code="" text="Editar Concepto" />" class="btn btn-info">
@@ -72,6 +78,7 @@
 								<input type="submit" value="<t:message code="" text="Añadir Concepto" />" class="btn btn-primary">
 							</c:otherwise>
 						</c:choose>
+						<td><a class="btn btn-primary btn-xs" href='<c:url value="/principalAdmin"></c:url>'>Volver</a></td>
 															
 					</f:form>
 				</div>
