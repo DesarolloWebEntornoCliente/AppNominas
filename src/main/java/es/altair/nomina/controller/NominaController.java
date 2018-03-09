@@ -36,7 +36,6 @@ public class NominaController {
 	public String inicio2(Model model) {
 		model.addAttribute("nomina", new NominaRef());
 		model.addAttribute("listNominasRef", nominaDAO.listarTodos());
-		//model.addAttribute("listNominas", nominaDAO.listConceptos());
 		
 		return "nominasReferencia";
 	}
@@ -132,13 +131,9 @@ public class NominaController {
 		
 		System.out.println("Aqui esta el ID: " + idNomina);
 
-		
-		//model.addAttribute("nomina", nominaDAO.obtenerNominaPorId(idNomina));
-		
 		u = nominaDAO.obtenerNominaPorId(idNomina);
 		
 		System.out.println("Aqui esta ella: " + u);
-		//System.out.println("Aqui esta la N: " + n);
  		
 		model.addAttribute("nomina", u);
 		model.addAttribute("listaCon", conceptoDAO.listConceptos());
