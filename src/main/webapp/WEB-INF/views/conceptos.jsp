@@ -105,8 +105,13 @@
 								<td>${cp.descripcion }</td>
 								<td>${cp.impuesto }</td>
 								<td>${cp.tipo }</td>
+								
+								<td>
+								<button type="button" class="btn btn-danger" data-toggle="modal"
+									data-target="#ModalCenterBorrar${cp.getIdConcepto()}">Borrar</button>
+								</td>
+								
 								<td><a class="btn btn-info btn-xs" href='<c:url value="/edit/${cp.idConcepto }"></c:url>'>Edit</a></td>
-								<td><a class="btn btn-danger btn-xs" href='<c:url value="/delete/${cp.idConcepto }"></c:url>'>Del</a></td>
 								<td></td>
 							</tr>
 						</c:forEach>
@@ -119,6 +124,32 @@
 </div>
 	</div>
 
+<!-- Modal -->
+			<c:forEach items="${listConceptos}" var="cp">
+				<div class="modal fade" id="ModalCenterBorrar${cp.getIdConcepto()}"
+					tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+					aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="ModalCenterLongTitle">¿Seguro
+									que desea eliminar ${cp.getDescripcion()} ?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">No</button>
+								<a
+									href="<c:url value="/deleteConcepto?idConcepto=${cp.getIdConcepto()}"/>"><button
+										type="button" class="btn btn-primary">Si</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
 	<!-- Optional JavaScript -->
 	<script src="<c:url value="/resources/js/jquery-3.2.1.slim.min.js" />"></script>
 	<script src="<c:url value="/resources/js/popper.min.js" />"></script>

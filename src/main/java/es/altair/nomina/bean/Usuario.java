@@ -100,12 +100,7 @@ public class Usuario implements Serializable{
 		this.nominas = nominas;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", nombre=" + nombre + ", login=" + login + ", email=" + email
-				+ ", password=" + password + ", tipo=" + tipo + ", nominas=" + nominas + ", nominasRef=" + nominasRef
-				+ "]";
-	}
+	
 	
 	
 }

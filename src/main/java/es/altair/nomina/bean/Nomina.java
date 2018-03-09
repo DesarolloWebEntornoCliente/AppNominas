@@ -80,6 +80,13 @@ public class Nomina implements Serializable  {
 	public void setUsuarios(Usuario usuarios) {
 		this.usuarios = usuarios;
 	}
+
+	@Override
+	public String toString() {
+		return "Nomina [idNomina=" + idNomina + ", valor=" + valor + ", mes=" + mes + "]";
+	}
+
+	
 	
 
 }

@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import es.altair.nomina.bean.Concepto;
 import es.altair.nomina.dao.ConceptoDAO;
 
-@Controller
+@Controller 
 public class ConceptoController {
 
 	@Autowired
@@ -26,13 +27,15 @@ public class ConceptoController {
 		return "conceptos";
 	}
 	
-	@RequestMapping(value="/delete/{id}") 
-	public String deleteConcepto(@PathVariable("id")int idConcepto) {
+	
+	@RequestMapping(value="/deleteConcepto") 
+	public String deleteConc(@RequestParam int idConcepto) {
 		
 		conceptoDAO.delete(idConcepto);
 		
 		return "redirect:/conceptos";
 	}
+	
 	
 	@RequestMapping(value="/edit/{id}") 
 	public String editarConcepto(@PathVariable("id")int idConcepto, Model model) {

@@ -22,7 +22,7 @@ public interface NominaDAO {
 	
 	public void insertar(Nomina n);
 	
-	public void insertarNominaRef(NominaRef n);
+	//public void insertarNominaRef(NominaRef n);
 	
 	public void delete(int id);	
 

@@ -30,7 +30,7 @@
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
 				<a href="usuarios" role="button" class="btn btn-outline-success btn-sm derecha disabled">Usuarios</a>
-				<a href="../conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
+				<a href="conceptos" role="button" class="btn btn-outline-success btn-sm derecha" style="margin-left: 1%">Conceptos</a>
 				<a href="../nominasReferencia/${usuario.idUsuario }" role="button" class="btn btn-outline-success btn-sm derecha disabled" style="margin-left: 1%">Nominas</a>
 			</div>
 
@@ -42,7 +42,7 @@
 		<div class="col-6 col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Adiciona / Edita Usuarios</h3>
+					<h3 class="panel-title">Adiciona / Edita Usuario</h3>
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaUsuario/50" var="add"></c:url>
@@ -96,8 +96,9 @@
 			</div>
 		</div>
 		
+		<!-- 
 			<c:set var="idN" value="${0}"/> 
-			<c:set var="nom" value=""/> 
+			<c:set var="nom" value=""/>        --> 
 	
 		<div class="row">
 			<div class="col-12 col-md-8">
@@ -121,12 +122,12 @@
 								<td>${u.email }</td>
 								<td>${u.login }</td>
 								<td>${u.tipo }</td>
-								
-								<c:set var="idN" value="${u.idUsuario}"/> 
-								<c:set var="nom" value="${u.nombre}"/> 
+								<td>
+								<button type="button" class="btn btn-danger" data-toggle="modal"
+									data-target="#ModalCenterBorrar${u.getIdUsuario()}">Borrar</button>
+								</td>
 
 								<td><a class="btn btn-info btn-xs" href='<c:url value="/editUsuario/${u.idUsuario }"></c:url>'>Edit</a></td>
-								<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Delete</button></td>
 								<td></td>
 							</tr>
 						</c:forEach>
@@ -138,27 +139,34 @@
 	</div>
 </div>
 </div>
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Desea Borrar a ${nom }</p><p> ${idN }</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		<a class="btn btn-danger btn-xs" href='<c:url value="deleteUsuario/${idN }"></c:url>'>Confirmar</a>       
-        <button type="button" class="btn btn-primary" onclick="'<c:url value="/deleteUsuario/${idn }"></c:url>'" + ${idn }">Confirmar</button> 
-      </div>
-    </div>
-  </div>
-</div>
+			<c:forEach items="${listUsuarios}" var="u">
+				<div class="modal fade" id="ModalCenterBorrar${u.getIdUsuario()}"
+					tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+					aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="ModalCenterLongTitle">¿Seguro
+									que desea eliminar a ${u.getNombre()} ?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">No</button>
+								<a
+									href="<c:url value="/deleteUsuario?idUsuario=${u.getIdUsuario()}"/>"><button
+										type="button" class="btn btn-primary">Si</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+				
 	<!-- Optional JavaScript -->
 	<script src="<c:url value="/resources/js/jquery-3.2.1.slim.min.js" />"></script>
 	<script src="<c:url value="/resources/js/popper.min.js" />"></script>

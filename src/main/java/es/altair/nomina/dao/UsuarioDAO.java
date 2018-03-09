@@ -10,7 +10,7 @@ public interface UsuarioDAO {
 
 	void insertar(Usuario usu);
 
-	boolean validarEmail(Usuario usu);
+	//boolean validarEmail(Usuario usu);
 	
 	List<Usuario> listarUsuarios();
 

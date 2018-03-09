@@ -63,30 +63,6 @@ private SessionFactory sessionFactory;
 	
 	@Transactional
 	@Override
-	public boolean validarEmail(Usuario usu) {
-		Session sesion = sessionFactory.getCurrentSession();
-		boolean correcto = true;
-		
-		
-			//COMENTAR
-			sesion.beginTransaction();
-						
-			if( (Usuario) sesion.createQuery("FROM Usuario WHERE email=:c")
-			.setParameter("c", usu.getEmail())
-			.uniqueResult() !=null)
-				correcto = false;
-			
-			//COMENTAR
-			sesion.getTransaction().commit();
-
-		return correcto;
-
-		
-		
-		
-	}
-	@Transactional
-	@Override
 	public List<Usuario> listarUsuarios() {
 		Session sesion = sessionFactory.getCurrentSession();
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -111,29 +112,37 @@ public class NominaController {
 		return "verMiNomina";
 	}
 	
-	
-	@RequestMapping(value="/deleteNomina/{id}", method = RequestMethod.GET) 
-	public String delete2(@PathVariable("id")int idNomina, Model model) {
-		
-		System.out.println("Hasta aqui llega - Num Id = " + idNomina);
-
-		nominaDAO.delete(idNomina);
-		
-		return "redirect:/nominas";
-	}
-	
-	@RequestMapping(value="/editNomina/{id}") 
-	public String editarNomina2(@PathVariable("id")int idNomina, Model model) {
+	@RequestMapping(value="/deleteNomina") 
+	public String delete1(@RequestParam int idNomina) {
 		
 		Nomina n = nominaDAO.obtenerNominaPorId(idNomina);
 		
-		int mes = n.getMes();
+		int idU = n.getUsuarios().getIdUsuario();
+		int m   = n.getMes(); 
 		
-		return "nominas";
+		nominaDAO.delete(idNomina);
+		
+		return "redirect:/nominas/" + idU + "/" + m;
+	}
+	
+	@RequestMapping(value="/editNomina/{id}", method = RequestMethod.GET) 
+	public String editarNomina2(@PathVariable("id")int idNomina, Model model, Nomina nomina) {
+		
+		model.addAttribute("nomina", nominaDAO.obtenerNominaPorId(idNomina));
+		
+		//Nomina n = nominaDAO.obtenerNominaPorId(idNomina);
+		
+		System.out.println(nomina);
+ 		
+		//model.addAttribute("nomina", n);
+		model.addAttribute("listaCon", conceptoDAO.listConceptos());
+		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());
+		
+		return "redirect:/nominas/" +  nomina.getUsuarios().getIdUsuario() + "/" + nomina.getMes();				
 	}
 	
 	
-	@RequestMapping(value="/adicionaEditaNomina", method= RequestMethod.GET)
+	@RequestMapping(value="/adicionaEditaNomina", method= RequestMethod.POST)
 	public String adicionarEditar2(@ModelAttribute Nomina n, Model model,HttpServletRequest request) {
 		
 		if(n.getIdNomina() == 0) {
@@ -153,12 +162,10 @@ public class NominaController {
 		}
 		else {
 			nominaDAO.editNomina(n);
-			
-			
-			
+	
 		}
 		
-		model.addAttribute("nomina", new Nomina());
+		model.addAttribute("nomina", n);
 		model.addAttribute("listNominas", nominaDAO.obtenerNominas(n.getUsuarios().getIdUsuario(), n.getMes()));
 		model.addAttribute("listaCon", conceptoDAO.listConceptos());
 		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());

@@ -66,9 +66,7 @@ public class NominaDAOImpl implements NominaDAO {
 		Session sesion = sessionFactory.getCurrentSession();
 		
 		List<Nomina> nominas = new ArrayList<Nomina>();
-		
-		System.out.println("Mes: " + mes + " -->> idNom: " + idUsuario);	
-		
+				
 
 		nominas = (List<Nomina>) ((SQLQuery) sesion.createSQLQuery("select idNomina, valor, mes, n.idConcepto, idUsuario from nominas n join conceptos c on (n.idConcepto=c.idConcepto) WHERE idUsuario=:id AND mes=:m order by c.tipo ")
 				.setParameter("id", idUsuario)
@@ -83,7 +81,10 @@ public class NominaDAOImpl implements NominaDAO {
 	@Transactional
 	@Override
 	public void editNomina(Nomina n) {
-		// TODO Auto-generated method stub
+		
+		Session sesion = sessionFactory.getCurrentSession();
+		
+		sesion.update(n);
 		
 	}
 
@@ -119,29 +120,15 @@ public class NominaDAOImpl implements NominaDAO {
 	@Override
 	public void delete(int id) {
 		
-		System.out.println("Num NOmina: " + id);
-
 		Session sesion = sessionFactory.getCurrentSession();
 
 		sesion.createQuery("DELETE FROM Nomina WHERE idNomina=:id")
 		.setParameter("id", id)
 		.executeUpdate();
-
-		
-		
-		//sesion.delete(obtenerNominaPorId(id));
 		
 	}
 
-	@Transactional
-	@Override
-	public void insertarNominaRef(NominaRef n) {
-		
-		Session sesion = sessionFactory.getCurrentSession();
 
-		sesion.persist(n);
-		
-	}
 
 	@Transactional
 	@Override

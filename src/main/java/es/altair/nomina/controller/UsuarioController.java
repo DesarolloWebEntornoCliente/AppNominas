@@ -58,11 +58,6 @@ public class UsuarioController {
 		
 		model.addAttribute("mensaje", mensaje);
 		model.addAttribute("listarJ", nominaDAO.listarTodos());
-		 
-		for (NominaRef j : nominaDAO.listarTodos()) {
-			System.out.println(j);
-			
-		}	
 		
 		return new ModelAndView("home", "command", new Usuario());
 	}
@@ -101,14 +96,9 @@ public class UsuarioController {
 			model.addAttribute("errorLogin","Inicie sesión para entrar");
 			return "redirect:/";
 		}
-		model.addAttribute("mensaje", mensaje);
-		//model.addAttribute("listarJ", JuegoDAO.listarTodos());
-		 
-		//for (Juego j : JuegoDAO.listarTodos()) {
-		//	System.out.println(j);
-			
-		//}	
+		model.addAttribute("mensaje", mensaje);	
 		model.addAttribute("usu", new Usuario());
+		
 		return "principalAdmin";
 	}
 	
@@ -128,8 +118,8 @@ public class UsuarioController {
 		return "perfil";
 	}
 	
-	@RequestMapping(value="/deleteUsuario/{id}") 
-	public String delete1(@PathVariable("id")int idUsuario) {
+	@RequestMapping(value="/deleteUsuario") 
+	public String delete1(@RequestParam int idUsuario) {
 		
 		usuarioDAO.borrarUsuario(idUsuario);
 		

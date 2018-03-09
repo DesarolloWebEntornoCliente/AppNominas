@@ -27,17 +27,12 @@ private SessionFactory sessionFactory;
 		
 		Session sesion = sessionFactory.getCurrentSession();
 		
-		//return (List<Concepto>)sesion.createQuery("from Concepto").list();
-
 		
 		List<Concepto> conceptos = new ArrayList<Concepto>();
 
 		conceptos = (List<Concepto>) ((SQLQuery) sesion.createSQLQuery("select * from conceptos")).addEntity(Concepto.class).list();
-
-		System.out.println("Lista de Conceptos: " + conceptos);
 		
 		return conceptos;
-		
 		
 		
 	}

@@ -46,9 +46,9 @@
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaNomina" var="add"></c:url>
-					<f:form action="${add }" commandName="nomina" class="form" role="form"  method="get" >
+					<f:form action="${add }" commandName="nomina" class="form" role="form"  method="post" >
 						<div class="form-group">
-							<c:if test="${nomina.valor} > 0">
+							<c:if test="${nomina.getValor()} > 0">
 								<f:label path="idNomina"><t:message code="" text="Codigo"></t:message> </f:label>
 								<f:input path="idNomina" class="form-control" readonly="true" disabled="true" />
 								<f:hidden path="idNomina"/>
@@ -88,7 +88,7 @@
 						</div>
 						<div class="form-group">
 							<f:label path="valor"><t:message code="" text="Valor"></t:message></f:label>
-							<f:input path="valor" class="form-control" type="number"/>
+							<f:input path="valor"  value="${nomina.getValor() }" class="form-control required" type="number" required="required" />
 						</div>	
 	
 						<!-- los selects -->
@@ -173,8 +173,13 @@
 								<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${nr.valor}"  pattern="##,###.00" /></td>	
 								<td>${nr.getConceptos().getDescripcion() }</td>
 								<td>${nr.getUsuarios().getNombre() }</td> 
-								<td><a class="btn btn-info btn-xs" href='<c:url value="/editNomina/${nr.idNomina }"></c:url>'>Edit</a></td>
-								<td><a class="btn btn-danger btn-xs" href='<c:url value="/deleteNomina/${nr.idNomina }"></c:url>'>Del</a></td>
+								<td>
+									<button type="button" class="btn btn-danger" data-toggle="modal"
+									data-target="#ModalCenterBorrar${nr.getIdNomina()}">Borrar</button>
+								</td>
+								
+								
+								<td><a class="btn btn-info btn-xs" href='<c:url value="/editNomina/${nr.getIdNomina() }"></c:url>'>Edit</a></td>
 								<td></td>
 							</tr>
 						</c:forEach>
@@ -186,6 +191,32 @@
 	</div>
 	</div>
 
+<!-- Modal -->
+			<c:forEach items="${listNominas}" var="nr">
+				<div class="modal fade" id="ModalCenterBorrar${nr.getIdNomina()}"
+					tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+					aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="ModalCenterLongTitle">¿Seguro
+									que desea eliminar el Valor ${nr.getValor()} ?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">No</button>
+								<a
+									href="<c:url value="/deleteNomina?idNomina=${nr.getIdNomina()}"/>"><button
+										type="button" class="btn btn-primary">Si</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
 
 	<!-- Optional JavaScript -->
 	<script src="<c:url value="/resources/js/jquery-3.2.1.slim.min.js" />"></script>
