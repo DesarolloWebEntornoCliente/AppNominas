@@ -43,12 +43,15 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Adiciona / Edita Nomina</h3>
+					<c:set var="total" value="${nomina.mes}" />
+					
+					<h5><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${total}"  pattern="##,###.00" /></h5>
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaNomina" var="add"></c:url>
-					<f:form action="${add }" commandName="nomina" class="form" role="form"  method="post" >
+					<f:form action="${add }" commandName="nomina" class="form" role="form" >
 						<div class="form-group">
-							<c:if test="${nomina.getValor()} > 0">
+							<c:if test="${nomina.idNomina} > 0">
 								<f:label path="idNomina"><t:message code="" text="Codigo"></t:message> </f:label>
 								<f:input path="idNomina" class="form-control" readonly="true" disabled="true" />
 								<f:hidden path="idNomina"/>
@@ -82,13 +85,11 @@
 							</c:otherwise>
 						</c:choose>
 						
-						
-						
 																	
 						</div>
 						<div class="form-group">
 							<f:label path="valor"><t:message code="" text="Valor"></t:message></f:label>
-							<f:input path="valor"  value="${nomina.getValor() }" class="form-control required" type="number" required="required" />
+							<f:input path="valor"  class="form-control required" type="number" required="required" />
 						</div>	
 	
 						<!-- los selects -->

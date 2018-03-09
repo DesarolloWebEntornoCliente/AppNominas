@@ -4,6 +4,7 @@ import es.altair.nomina.bean.Usuario;
 
 import java.util.List;
 
+import es.altair.nomina.bean.Irpf;
 import es.altair.nomina.bean.Meses;
 import es.altair.nomina.bean.Nomina;
 import es.altair.nomina.bean.NominaRef;
@@ -31,5 +32,7 @@ public interface NominaDAO {
 	public Meses obtenerMes(int idMes);
 	
 	public List<Meses> listaMeses();
+	
+	public List<Irpf> listaTablaIrpf();
 
 }

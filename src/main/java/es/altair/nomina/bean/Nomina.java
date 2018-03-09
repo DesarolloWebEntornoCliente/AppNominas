@@ -83,8 +83,11 @@ public class Nomina implements Serializable  {
 
 	@Override
 	public String toString() {
-		return "Nomina [idNomina=" + idNomina + ", valor=" + valor + ", mes=" + mes + "]";
+		return "Nomina [idNomina=" + idNomina + ", valor=" + valor + ", mes=" + mes + ", conceptos=" + conceptos.getDescripcion()
+				+ ", usuarios=" + usuarios.getIdUsuario() + "]";
 	}
+
+
 
 	
 	

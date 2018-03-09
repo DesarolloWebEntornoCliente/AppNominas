@@ -86,6 +86,7 @@ public class NominaController {
 		}
 		
 		model.addAttribute("nomina", new Nomina());
+		model.addAttribute("listaIrpf", nominaDAO.listaTablaIrpf());
 		model.addAttribute("listNominas", nominaDAO.obtenerNominas(idUsu, mes));
 		model.addAttribute("listaCon", conceptoDAO.listConceptos());
 		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());
@@ -108,6 +109,7 @@ public class NominaController {
 		model.addAttribute("listaCon", conceptoDAO.listConceptos());
 		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());
 		model.addAttribute("usu", usuarioDAO.obtenerUsuarioPorId(idUsu));
+		model.addAttribute("listaIrpf", nominaDAO.listaTablaIrpf());
 		
 		return "verMiNomina";
 	}
@@ -126,19 +128,23 @@ public class NominaController {
 	}
 	
 	@RequestMapping(value="/editNomina/{id}", method = RequestMethod.GET) 
-	public String editarNomina2(@PathVariable("id")int idNomina, Model model, Nomina nomina) {
+	public String editarNomina2(@PathVariable("id")int idNomina, Model model, Nomina u) {
 		
-		model.addAttribute("nomina", nominaDAO.obtenerNominaPorId(idNomina));
+		System.out.println("Aqui esta el ID: " + idNomina);
+
 		
-		//Nomina n = nominaDAO.obtenerNominaPorId(idNomina);
+		//model.addAttribute("nomina", nominaDAO.obtenerNominaPorId(idNomina));
 		
-		System.out.println(nomina);
+		u = nominaDAO.obtenerNominaPorId(idNomina);
+		
+		System.out.println("Aqui esta ella: " + u);
+		//System.out.println("Aqui esta la N: " + n);
  		
-		//model.addAttribute("nomina", n);
+		model.addAttribute("nomina", u);
 		model.addAttribute("listaCon", conceptoDAO.listConceptos());
 		model.addAttribute("listaUsu", usuarioDAO.listarUsuarios());
 		
-		return "redirect:/nominas/" +  nomina.getUsuarios().getIdUsuario() + "/" + nomina.getMes();				
+		return "redirect:/nominas/" +  u.getUsuarios().getIdUsuario() + "/" + u.getMes();				
 	}
 	
 	

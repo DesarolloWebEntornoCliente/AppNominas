@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import es.altair.nomina.bean.Nomina;
 import es.altair.nomina.bean.NominaRef;
 import es.altair.nomina.bean.Concepto;
+import es.altair.nomina.bean.Irpf;
 import es.altair.nomina.bean.Meses;
 import es.altair.nomina.bean.Usuario;
 
@@ -146,6 +147,15 @@ public class NominaDAOImpl implements NominaDAO {
 		 Session sesion = sessionFactory.getCurrentSession();
 			
 		return (List<Meses>) sesion.createSQLQuery("select * from meses ").addEntity(Meses.class).list();
+	}
+
+	@Transactional
+	@Override
+	public List<Irpf> listaTablaIrpf() {
+		
+		 Session sesion = sessionFactory.getCurrentSession();
+			
+			return (List<Irpf>) sesion.createSQLQuery("select * from irpf ").addEntity(Irpf.class).list();
 	}
 	
 

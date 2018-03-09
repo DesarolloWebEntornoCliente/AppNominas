@@ -42,7 +42,9 @@
 					<div class="col-sm">
 		
 		<div class="alert alert-secondary" role="alert" style="margin-top: 2%">
-			<p>Usuario :  <c:out value = "${usu.nombre}"/><p>
+			<p>Usuario :  <c:out value = "${usu.nombre}"/>
+				<a style="margin-left: 30%;" class="btn btn-primary btn-xs" href='<c:url value="../../nominasReferencia"></c:url>'>Volver</a>	<p>					
+		</p>
 		</div>
 				
 		</div>
@@ -56,6 +58,7 @@
 					<thead>
 						<tr>
 							<th>Concepto</th>
+							<th></th>
 							<th style="text-align:right">Devengos</th>
 							<th style="text-align:right">Deducciones</th>
 						</tr>
@@ -68,15 +71,15 @@
 						<c:set var="desc1" value="${0}"/>
 						<c:set var="desc2" value="${0}"/>
 						<c:set var="desc3" value="${0}"/>
-						
-						<c:forEach var="article" items="${list}">
-						    <c:set var="total" value="${total + article.price}" />
-						</c:forEach>
+						<c:set var="tasa" value="${0}"/>
+						<c:set var="descIrpf" value="${0}"/>
+												
 
 					<tbody style="text-align:right">
 						<c:forEach items="${listNominas}" var="nr">
 							<tr>
 								<td>${nr.getConceptos().getDescripcion() }</td>
+								<td></td>
 								<c:if test='${nr.getConceptos().getTipo() == "C"}'>
 									<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${nr.valor}"  pattern="##,###.00" /></td>	
 									<td></td>
@@ -95,28 +98,49 @@
 							<c:set var="desc2" value="${devengos * 0.10 /100}"/> 
 							<c:set var="desc3" value="${devengos * 1.6 /100}"/> 
 						
+							<c:forEach items="${listaIrpf}" var="ir">							
+								<c:if test='${(devengos  * 12) > ir.de && (devengos * 12) < ir.hasta }'>
+									<c:set var="tasa" value="${ir.getPercentual()}" /> 								
+								</c:if>	
+							</c:forEach>
+						
+							<c:set var="descIrpf" value="${devengos * tasa / 100}"/>
+						
+						
 						<!--  Lamza las deducciones comunes -->
 						
 						<tr>
 							<td>Cotizacion Cont Comu</td>
+							<td>4.7</td>
 							<td></td>
 							<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${desc1 }"  pattern="##,###.##" /></td>	
 						</tr>
 						<tr>
 							<td>Cotizacion Formación</td>
+							<td>0.10</td>
 							<td></td>
 							<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${desc2 }"  pattern="##,###.00" /></td>	
 						</tr>
 						<tr>
 							<td>Cotización Desempleo</td>
+							<td>1.6</td>
 							<td></td>
 							<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${desc3 }"  pattern="##,###.00" /></td>	
 						</tr>
 												
+						<tr>
+							<td>I.R.P.F</td>
+							<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${tasa }"  pattern="##,###.00" /></td>	
+							<td></td>
+							<td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${descIrpf }"  pattern="##,###.00" /></td>	
+						</tr>
+
+
 						  <tr>
 						     <td>Liquido a Recibir</td>
 						     <td></td>
-						     <td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${devengos - (deducciones + desc1 + desc2 + desc3)}"  pattern="##,###.00" /></td>							     			  	  
+						     <td></td>
+						     <td><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${devengos - (deducciones + desc1 + desc2 + desc3 + descIrpf)}"  pattern="##,###.00" /></td>							     			  	  
 					  	  </tr>
 					  <tfoot>
 					 
