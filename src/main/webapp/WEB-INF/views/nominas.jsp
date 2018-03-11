@@ -42,10 +42,8 @@
 		<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Adiciona / Edita Nomina</h3>
+					<h3 class="panel-title">Gestionar Nomina</h3>
 					<c:set var="total" value="${nomina.mes}" />
-					
-					<h5><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${total}"  pattern="##,###.00" /></h5>
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaNomina" var="add"></c:url>
@@ -89,7 +87,7 @@
 						</div>
 						<div class="form-group">
 							<f:label path="valor"><t:message code="" text="Valor"></t:message></f:label>
-							<f:input path="valor"  class="form-control required" type="number" required="required" />
+							<f:input path="valor"  class="form-control required" type="number" min="1" />
 						</div>	
 	
 						<!-- los selects -->
@@ -162,7 +160,6 @@
 							<th>valor</th>
 							<th>Concepto</th>
 							<th>Usuario</th>
-							<th>Editar</th>
 							<th>Borrar</th>
 						</tr>
 					</thead>
@@ -178,9 +175,8 @@
 									<button type="button" class="btn btn-danger" data-toggle="modal"
 									data-target="#ModalCenterBorrar${nr.getIdNomina()}">Borrar</button>
 								</td>
-								
-								
-								<td><a class="btn btn-info btn-xs" href='<c:url value="/editNomina/${nr.getIdNomina() }"></c:url>'>Edit</a></td>
+															
+							<!-- 	<td><a class="btn btn-info btn-xs" href='<c:url value="/editNomina/${nr.getIdNomina() }"></c:url>'>Edit</a></td>   -->
 								<td></td>
 							</tr>
 						</c:forEach>

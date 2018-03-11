@@ -60,7 +60,7 @@
 						</div>
 						<div class="form-group">
 							<f:label path="email"><t:message code="" text="Correo"></t:message></f:label>
-							<f:input path="email" type="email" class="form-control"  required="required" />
+							<f:input path="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control"  required="required" />
 						</div>					
 								
 						<div class="form-group">
@@ -72,13 +72,36 @@
 							<f:input path="password" type="password" class="form-control"  required="required" />
 						</div>	
 
+			
+
 						<div class="form-group">
 							<f:label path="tipo"><t:message code="" text="Seleccione un Tipo"></t:message></f:label>
-								<select class="form-control" name="tipo" id="tipo">
-							      	<option value="0">Desabilitado</option>							      	
+								<f:select path="tipo" class="form-control" name="tipo" id="tipo" >				
+								
+								
+						<c:choose>
+							<c:when test="${usuario.tipo == 0 }">
+								<c:set var="descTipo" value="Desabilitado" ></c:set>	
+								<option value="${usuario.tipo}" selected>${descTipo}</option>							      	
 							      	<option value="1">Usuario</option>							      								      													
-							      	<option value="2">Administrador</option>							      								      													
-								</select>														
+							      	<option value="2">Administrador</option>															
+							</c:when>
+							<c:when test="${usuario.tipo == 1 }">
+								<c:set var="descTipo" value="Usuario" ></c:set>
+									<option value="0">Desabilitado</option>							      	
+									<option value="${usuario.tipo}" selected>${descTipo}</option>							      	
+							      	<option value="2">Administrador</option>	
+								
+							</c:when>
+							<c:otherwise>
+								<c:set var="descTipo" value="Administrador" ></c:set>
+								<option value="0">Desabilitado</option>	
+								<option value="1">Usuario</option>							      								      													
+								<option value="${usuario.tipo}" selected>${descTipo}</option>
+							</c:otherwise>
+						</c:choose>											
+				      								      													
+								</f:select>														
 						</div>
 
 						<c:choose>
@@ -89,6 +112,7 @@
 								<input type="submit" value="<t:message code="" text="Añadir Usuario" />" class="btn btn-primary">
 							</c:otherwise>
 						</c:choose>
+						
 						<td><a class="btn btn-primary btn-xs" href='<c:url value="/principalAdmin"></c:url>'>Volver</a></td>
 															
 					</f:form>

@@ -31,7 +31,7 @@
 
 			<div class="input-group input-group-sm mb-2 mr-sm-2 mb-sm-0">
 
-				<a href='<c:url value="/perfil/7"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha">Mi Perfil</a>
+				<a href='<c:url value="/perfil/${idUsuario }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha">Mi Perfil</a>
 			 	<a href='<c:url value="/nominasReferenciaUsu/${usuario }"></c:url>' role="button" class="btn btn-outline-success btn-sm derecha disabled" style="margin-left: 1%">Nominas</a> 
 			</div>
 

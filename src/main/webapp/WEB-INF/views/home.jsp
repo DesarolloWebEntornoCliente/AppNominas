@@ -21,6 +21,13 @@
    <div class="container">    
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-info" >
+            <c:if test="${mensaje != ''}">
+				<div class="alert alert-warning alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">x</button>
+					<strong>Info!</strong> ${mensaje}
+				</div>
+			</c:if>
                     <div class="panel-heading">
                         <div class="panel-title">Login</div>
                         <div style="float:right; font-size: 80%; position: relative; top:-10px"></div>
@@ -45,13 +52,6 @@
 
                                     </div>
                                 
-                            <div class="input-group">
-                                      <div class="checkbox">
-                                        <label>
-                                          <input id="login-remember" type="checkbox" name="remember" value="1"> Recordar
-                                        </label>
-                                      </div>
-                                    </div>
 
                                 <div style="margin-top:10px" class="form-group">
                                     <!-- Button -->
@@ -62,11 +62,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-12 control">
+                                    <div class="col-md control">
                                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                             ¿Aún no tienes Cuenta? 
                                         <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                                            Registrase aqui
+                                          Registrase aqui
                                         </a>
                                         </div>
                                     </div>
@@ -92,23 +92,25 @@
                                     <span></span>
                                 </div>
                                   
-                                <div class="form-group">
-                                    <label for="email" class="col-md-3 control-label">Email</label>
-                                    <div class="col-md-9">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Cuenta de Correo" required="required">
-                                    </div>
-                                </div>
                                     
                                 <div class="form-group">
                                     <label for="firstname" class="col-md-3 control-label">Nombre</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required="required">
+                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduzca su Nombre " required="required">
                                     </div>
                                 </div>
+                                
+                               <div class="form-group">
+                                    <label for="email" class="col-md-3 control-label">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Indique una Cuenta de Correo Eletronico" required="required">
+                                    </div>
+                                </div>
+                                                                
                                 <div class="form-group">
                                     <label for="lastname" class="col-md-3 control-label">Usuario</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="login" name="login" placeholder="Nombre de Usuario" required="required">
+                                        <input type="text" class="form-control" id="login" name="login" placeholder="Nombre de Usuario para Logearse" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">

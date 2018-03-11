@@ -43,6 +43,7 @@ public class NominaController {
 	@RequestMapping(value="/nominasReferenciaUsu/{idUsu}", method = RequestMethod.GET)
 	public String nominasRefUsu(@PathVariable("idUsu")int idUsuario, Model model) {
 		model.addAttribute("nomina", new NominaRef());
+		model.addAttribute("idUsuario", idUsuario);
 		model.addAttribute("listNominasRef", nominaDAO.listarNominasPorUsuario(idUsuario));
 		
 		return "nominasReferenciaUsu";

@@ -22,6 +22,7 @@ import es.altair.nomina.bean.Usuario;
 import es.altair.nomina.dao.ConceptoDAO;
 import es.altair.nomina.dao.NominaDAO;
 import es.altair.nomina.dao.UsuarioDAO;
+import es.altair.nomina.dao.Util;
 
 @Controller
 @SessionAttributes("usuLogeado")
@@ -79,7 +80,9 @@ public class UsuarioController {
 	@RequestMapping(value="/cerrarSesion", method = RequestMethod.GET)
 	public String cerrarSesion(HttpSession session) {
 				
-		return "redirect:/";
+		session.removeAttribute("usuLogeado");
+		session.invalidate();
+		return "redirect:/?mensaje=Sesion Cerrada.";
 	}
 	
 	private boolean noLogueado(HttpSession session) {
@@ -113,8 +116,9 @@ public class UsuarioController {
 	
 	@RequestMapping(value="/perfil/{id}", method = RequestMethod.GET)
 	public String perfil(Model model, Usuario usuario, @PathVariable("id")int idUsuario) {
-		model.addAttribute("usuario", usuarioDAO.obtenerUsuarioPorId(idUsuario));
 		
+		model.addAttribute("usuario", usuarioDAO.obtenerUsuarioPorId(idUsuario));
+				
 		return "perfil";
 	}
 	
@@ -128,6 +132,7 @@ public class UsuarioController {
 	
 	@RequestMapping(value="/editUsuario/{id}") 
 	public String editarUsuario(@PathVariable("id")int idUsuario, Model model) {
+		
 		Usuario u = usuarioDAO.obtenerUsuarioPorId(idUsuario);
 		
 		model.addAttribute("usuario", u);
@@ -139,10 +144,41 @@ public class UsuarioController {
 	@RequestMapping(value="/adicionaEditaUsuario/{control}", method= RequestMethod.POST)
 	public String adicionarEditar1(@PathVariable("control")int control, @ModelAttribute Usuario u) {
 		
-		if(u.getIdUsuario() == 0)
+		String loginOld = u.getLogin();		
+		int id = u.getIdUsuario();
+		
+		if(u.getIdUsuario() == 0) {
+			
+			if(usuarioDAO.verificarLogin(loginOld))
+				return "redirect:/usuarios?mensaje=Login ya registrado. Intentelo con otro Login";					
+			
 			usuarioDAO.insertar(u);
-		else
+		}
+		else {
+			
+			if(usuarioDAO.verificarLoginEditar(loginOld, id)) {
+				
+				if(control == 50)
+					return "redirect:/usuarios?mensaje=Login ya registrado. Intentelo con otro Login";	
+				else
+					return "redirect:/perfil/" + u.getIdUsuario() + "/?mensaje=Login ya registrado. Intentelo con otro Login";				
+
+			}
+			
+			
+			String key = "47AE31A79FEEB2A3"; // LLAVE DE INCRIPTACIÓN
+			String iv = "0123456789ABCDEF"; // VETOR DE INICIALIZACIÓN
+			
+			String pass = u.getPassword();
+			try {
+				u.setPassword(Util.Encriptaciones.decrypt(key, iv, pass));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			usuarioDAO.ActualizarUsuario(u);
+		}
 		
 		if(control == 50)
 			return "redirect:/usuarios";
@@ -154,9 +190,15 @@ public class UsuarioController {
 	@RequestMapping(value="/registraUsuario", method= RequestMethod.POST)
 	public String registra(@ModelAttribute Usuario u) {
 		
+		String loginOld = u.getLogin();
+		
+		if(usuarioDAO.verificarLogin(loginOld))
+			return "redirect:/?mensaje=Usuario Ya Existe";
+		
+		
 			usuarioDAO.insertar(u);
 		
-		return "redirect:/";
+		return "redirect:/?mensaje=Usuario Registrado con Exito";
 		
 	}
 	

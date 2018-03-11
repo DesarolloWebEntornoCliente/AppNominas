@@ -43,12 +43,29 @@
 	<div class="row">
 		<div class="col-6 col-md-4">
 			<div class="panel panel-default">
+			
+		<!-- 	<c:if test="${mensaje != ''}">
+				<div class="alert alert-warning alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">x</button>
+					<strong>Info!</strong> ${mensaje}
+				</div>
+			</c:if>   -->
+			
 				<div class="panel-heading">
 					<h3 class="panel-title">Edita Perfil de Usuario</h3>
 				</div>
 				<div class="panel-body">
 					<c:url value="/adicionaEditaUsuario/100" var="add"></c:url>
 					<f:form action="${add }" commandName="usuario" class="form" role="form" method="post"> 
+						<div class="form-group">
+							<c:if test="${!empty usuario.nombre }">
+							<f:label path="idUsuario"><t:message code="" text="Codigo"></t:message> </f:label>
+							<f:input path="idUsuario" class="form-control" readonly="true" disabled="true" />
+							<f:hidden path="idUsuario"/>
+							</c:if>
+						</div>
+					
 						<div class="form-group">
 							<f:label path="nombre"><t:message code="" text="Nombre"></t:message></f:label>
 							<f:input path="nombre" class="form-control"  required="required" />
@@ -67,9 +84,26 @@
 							<f:input path="password" type="password" class="form-control"  required="required" />
 						</div>	
 
+						<c:set var="descTipo" value=""/>
+						
+
+						
+						<c:choose>
+							<c:when test="${usuario.tipo == 0 }">
+								<c:set var="descTipo" value="Desabilitado" ></c:set>								
+							</c:when>
+							<c:when test="${usuario.tipo == 1 }">
+								<c:set var="descTipo" value="Usuario" ></c:set>
+							</c:when>
+							<c:otherwise>
+								<c:set var="descTipo" value="Administrador" ></c:set>
+							</c:otherwise>
+						</c:choose>						
+
+
 						<div class="form-group">
 							<f:label path="tipo"><t:message code="" text="Tipo" ></t:message></f:label>
-							<f:input path="tipo" class="form-control" readonly="true"/> 
+							<f:input path="tipo" class="form-control" readonly="true" value="${descTipo }"/> 
 						</div>	
 
 						<input type="submit" value="<t:message code="" text="Guardar Datos" />" class="btn btn-info">

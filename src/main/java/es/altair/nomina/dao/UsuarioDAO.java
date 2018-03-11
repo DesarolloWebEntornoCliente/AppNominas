@@ -19,4 +19,9 @@ public interface UsuarioDAO {
 	Usuario obtenerUsuarioPorId(int idUsuario);
 
 	void ActualizarUsuario(Usuario u);
+	
+	public boolean verificarLogin(String login);
+
+	boolean verificarLoginEditar(String login, int id);
+
 }
